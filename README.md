@@ -1,227 +1,317 @@
-<h1 align="center">山姆财经学院 (Samcollege)</h1>
+<h1 align="center">SamFin AI Education Company</h1>
 <p align="center">
-  <strong>全站式财经学科智能教育系统</strong>
+  <strong>面向财经教育的 AI Native 多对一教学公司</strong>
 </p>
 
 <p align="center">
-  <a href="#">
-    <img src="https://img.shields.io/badge/Python-3.10+-blue.svg" alt="Python">
-  </a>
-  <a href="#">
-    <img src="https://img.shields.io/badge/AI-Agent-red.svg" alt="AI">
-  </a>
-  <a href="#">
-    <img src="https://img.shields.io/badge/FastAPI-现代Web框架-green.svg" alt="FastAPI">
-  </a>
-  <a href="#">
-    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License">
-  </a>
+  <a href="#"><img src="https://img.shields.io/badge/Python-3.12+-blue.svg" alt="Python"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Agency%20Swarm-Communication%20Graph-red.svg" alt="Agency Swarm"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Agent%20Harness-Runtime-black.svg" alt="Agent Harness"></a>
+  <a href="#"><img src="https://img.shields.io/badge/FastAPI-Microservices-green.svg" alt="FastAPI"></a>
+  <a href="#"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License"></a>
 </p>
 
 ---
 
-## 项目背景与使命
+## SamFin 是什么
 
-Sam College of Finance and Economics（山姆财经学院）是一个面向财经学科的 AI 教学平台。我们相信，优质的教育资源应该是普惠的、个性化的。通过AI Agent 技术，Sam College 致力于为每一位财经学习者提供专属的"智能数字教学平台"，让知识触手可及。
+SamFin 是面向财经考研与财经证书培训的 AI Native 教育公司。平台围绕考试目标、学习周期、知识库、题库、学习记录和长期成长档案，为学生组织一支多对一的 AI 教学团队。
 
-我们的任务是通过 AI 技术打破传统教育的时空限制，构建一个能够自更新、自适应的智能教学系统，为学习者提供真正个性化的学习体验。
+在 SamFin 中，教务总监负责接待和分流，教学团队以独立部门形式运营。每个团队配置班主任、主讲教授、教研总监、习题讲师和助教集群，通过公司通信图协同完成诊断、规划、授课、练习、复盘和续学。
 
-**在线体验**：[https://samcollege.top](http://8.130.25.169:5173/) - 立即注册，开启你的智能学习之旅（备案中）
+## 产品架构
 
-### 主页预览
+### 公司级入口
 
-<img src="img/home0.png" alt="Sam College of Finance and Economics 主页" width="800"/>
-<p align="center">
-  <strong>Sam College of Finance and Economics 主页</strong>
-</p>
-<br />
+- 教务总监：平台前台，只负责收集考试目标和备考时间，并把学生移交给合适团队的班主任。
+- 团队注册中心：扫描 `team/<team_id>/config.yaml`，结合全局配置决定哪些教学团队对外营业。
+- 公司通信图：入口总监连接各团队班主任，由班主任组织团队内部教学资源。
+- 会话权交接：完成分流后，同一 session 进入对应团队服务。
 
-<img src="img/home1.png" alt="Sam College of Finance and Economics 主页" width="800"/>
-<p align="center">
-  <strong>双语支持</strong>
-</p>
-<br />
+### 教学团队子图
 
-<img src="img/home2.png" alt="Sam College of Finance and Economics 主页" width="800"/>
-<p align="center">
-  <strong>多风格系统</strong>
-</p>
-<br />
+五大团队都采用同一套高级 VIP 多对一服务结构：
 
-***
+- 班主任：团队第一责任人，接收教务总监移交，继续做学习诊断和服务组织。
+- 主讲教授：负责核心科目讲解、知识体系搭建、题目陷阱和答疑。
+- 教研总监：负责阶段规划、测评策略、模考复盘和验收指标。
+- 习题讲师：负责题型拆解、例题讲练、错题归因和专项训练。
+- 助教集群：负责答疑、资料整理、学习提醒、题库维护和进度跟踪。
 
-## 核心功能
+团队扩展标准已经固化：一个团队目录、一份团队配置、多份独立 prompt、一套知识库和题库工具、一套用户学习数据接入策略。
 
-SamCollege 提供 12+ 核心功能，覆盖学习全流程：
+## 五大王牌教学团队
 
-**AI 教学**
+SamFin 覆盖财经教育最有商业价值的考证和考研方向，形成五大王牌教学团队。每个团队都配置班主任、主讲教授、教研总监、习题讲师、助教集群、题库、知识库、学习进度表和长期成长档案。
 
-- 教授授课 - 集成最前沿智能体算法的教授 AGENT，提供超越传统聊天机器人的教学体验
-- 策略自迭代 - 基于 Open CLaw 的记忆系统，24 小时自动更新教学策略
-- 全学科教学 - 覆盖数学、物理、化学、英语等全学科内容，支持输出教学视频等多模态教学
+| 团队 | 市场定位 | 核心产品能力 |
+|---|---|---|
+| CPA 注册会计师 VIP 团队 | 财会证书硬通货，面向审计、财务、投行、咨询和企业财务晋升 | 六科全程规划、会计/审计/财管重难点拆解、主观题训练、错题闭环、考前冲刺和跨年度续学 |
+| 金融学 / 金融专硕 VIP 团队 | 财经考研主战场，覆盖金融学、金融专硕、金融科技与金融工程方向 | 431 金融学综合、396 经济类联考、货币金融、公司金融、投资学、热点论述和复试面试训练 |
+| 会计专硕 / 会计职称 VIP 团队 | MPAcc、初级/中级/高级会计资格的高频刚需市场 | 管综逻辑写作、会计实务、财务管理、经济法、复试专业课和在职备考节奏管理 |
+| 西方经济学 / 应用经济学 VIP 团队 | 经济学考研底层能力中心，服务应用经济学、产业经济学、区域经济学等方向 | 微观、宏观、计量基础、801/803/806 等院校专业课、模型推导、计算题和论述题训练 |
+| 税务师 / 税务专硕 VIP 团队 | 财税垂直高价值赛道，覆盖税务师、税务专硕和企业税务实务 | 税法一/二、涉税服务实务、433 税务专业基础、税种知识图谱、政策更新和案例拆解 |
 
-**智能系统**
+金融团队内置 CFA、FRM、量化金融和金融科技扩展线；会计团队内置审计、财管和企业财务管理扩展线。SamFin 按学习目标组织教学资源，为每名学生匹配专属 AI 教学团队。
 
-- Open Claw 系统 - 系统级运行能力，深度集成操作系统
-- Agent 终端助教 - 关注用户学习进度、反馈、需求，智能调整教学策略
-- AI 数据分析 - 机器学习算法迭代，多维度洞察学习表现
+## AI Native 生态蓝图
 
-**知识管理**
+SamFin 的长期形态是三层生态：
 
-- 自支持知识库 - 上传文档、PDF、笔记，AI 自动整理、归纳、关联知识点
-- 自更新知识库 - 知识库持续进化，AI 自动发现新知识、更新旧内容
-- 笔记管理 - 内置 Markdown 编辑器，支持标注、笔记、AI 智能解析
+- AI 公司系统：负责 agent 公司组织、团队通信图、会话权交接、教学职责边界和多 agent 协作。
+- 工具系统：独立 MCP 工具服务，按 namespace 暴露 RAG、题库、代码沙箱、知识库、学习进度查询等能力，agent 按需获取工具。
+- 用户系统：独立用户微服务，负责鉴权、用户档案、班级、聊天历史、学习进度、做题记录、购买权益和长期 summary。
 
-**学习追踪**
+最终平台会形成闭环：
 
-- 学习看板 - 可视化展示学习进度、知识点掌握情况、学习时间分布
-- 精准施教 - 基于机器学习算法，由 SKILL 驱动，动态调整教学策略
-- 多风格系统+双语 - 支持 5 种风格和中英文双语系统
+1. 用户注册或登录。
+2. 教务总监识别考试目标和备考时间。
+3. 公司通信图将会话权交给对应团队班主任。
+4. 班主任读取用户班级和学习进度窗口。
+5. 教授、教研和助教工具围绕同一学习目标协作。
+6. 本次学习结束后沉淀聊天记录、做题记录、学习进度和长期 summary。
+7. 下一次进入时，团队基于历史记录继续服务。
 
-***
+## 技术方案
+
+### Agent 编排
+
+- Agency Swarm：表达公司级和团队级通信图，管理 agent 访问关系和会话交接。
+- OpenAI Agents Runtime：托管单 agent 工具循环，替代历史手写 ReAct。
+- Team Config：`team/<team_id>/config.yaml` 自描述团队元信息、入口、成员、工具、共享上下文和 prompt 路径。
+- Team Prompts：团队 prompt 独立放在 `team/<team_id>/prompts/`，避免入口提示词和团队业务耦合。
+
+### 整体通信架构
+
+```mermaid
+flowchart TB
+    Client[Client / Frontend] --> Director[教务总监]
+
+    subgraph Company[AI Company Service]
+        Director --> Registry[团队注册中心]
+        Registry --> CPA[CPA 团队班主任]
+        Registry --> Finance[金融学 / 金融专硕团队班主任]
+        Registry --> Accounting[会计专硕 / 会计职称团队班主任]
+        Registry --> Economics[西方经济学 / 应用经济学团队班主任]
+        Registry --> Tax[税务师 / 税务专硕团队班主任]
+
+        subgraph CPATeam[CPA 教学团队]
+            CPA <--> CPAProfessor[主讲教授]
+            CPA <--> CPATeachingResearch[教研总监]
+            CPA <--> CPAExercise[习题讲师]
+            CPA --> CPAAssistants[助教集群]
+        end
+
+        subgraph FinanceTeam[金融学 / 金融专硕教学团队]
+            Finance <--> FinanceProfessor[主讲教授]
+            Finance <--> FinanceTeachingResearch[教研总监]
+            Finance <--> FinanceExercise[习题讲师]
+            Finance --> FinanceAssistants[助教集群]
+        end
+
+        subgraph AccountingTeam[会计专硕 / 会计职称教学团队]
+            Accounting <--> AccountingProfessor[主讲教授]
+            Accounting <--> AccountingTeachingResearch[教研总监]
+            Accounting <--> AccountingExercise[习题讲师]
+            Accounting --> AccountingAssistants[助教集群]
+        end
+
+        subgraph EconomicsTeam[西方经济学 / 应用经济学教学团队]
+            Economics <--> EconomicsProfessor[主讲教授]
+            Economics <--> EconomicsTeachingResearch[教研总监]
+            Economics <--> EconomicsExercise[习题讲师]
+            Economics --> EconomicsAssistants[助教集群]
+        end
+
+        subgraph TaxTeam[税务师 / 税务专硕教学团队]
+            Tax <--> TaxProfessor[主讲教授]
+            Tax <--> TaxTeachingResearch[教研总监]
+            Tax <--> TaxExercise[习题讲师]
+            Tax --> TaxAssistants[助教集群]
+        end
+    end
+
+    Company --> ToolSystem[MCP Tool Service]
+    Company --> UserSystem[User System Service]
+
+    ToolSystem --> RAG[课程知识库 / RAG]
+    ToolSystem --> QuestionBank[题库 / 错题 / 练习]
+    ToolSystem --> Sandbox[代码沙箱 / 外部工具]
+
+    UserSystem --> Auth[JWT 鉴权]
+    UserSystem --> Profile[用户档案 / 班级]
+    UserSystem --> Learning[学习进度 / 长期 Summary]
+    UserSystem --> Chat[聊天历史 / 历史快照]
+    UserSystem --> Exercise[做题记录]
+    UserSystem --> Commerce[订单 / 课程权益]
+
+    UserSystem --> Postgres[(PostgreSQL / PolarDB)]
+    UserSystem --> Redis[(Redis Cache)]
+
+```
+
+### 数据和记忆
+
+- PostgreSQL/PolarDB 是用户学习数据事实来源。
+- Redis 是用户系统内部缓存，不暴露给 agent 主流程直接访问。
+- Agent 运行期共享上下文只放摘要窗口和当前工作态，不长期保存用户学习档案。
+- 学习进度采用 `user_id + class_id + chat_id` 等维度组织，支持同一用户在同一团队多次开班、多次学习周期和历史快照回看。
+
+## 核心能力
+
+- 多团队接待：教务总监统一接待学生，并按考试目标和学习周期分配教学团队。
+- 多对一服务：班主任、主讲教授、教研总监、习题讲师和助教集群协同服务同一学习目标。
+- 学习档案：围绕用户、班级、课程会话、学习进度、做题记录和长期 summary 建立连续记录。
+- 工具生态：通过 MCP 服务连接知识库、题库、RAG、代码沙箱和外部工具。
+- 配置化扩展：新增教学团队时，通过团队目录、团队配置和独立 prompt 扩展。
 
 ## 项目结构
 
-```
-SamCollege/
+```text
+SamFin/
 ├── src/
-│   ├── agent/
-│   │   ├── core/
-│   │   ├── mcp/
-│   │   ├── skills/
-│   │   ├── prompt/
-│   │   ├── query/
-│   │   ├── util/
-│   │   ├── llm/
-│   │   ├── agent.py
-│   │   ├── factory.py
-│   │   ├── memory.py
-│   │   ├── planner.py
-│   │   └── tools.py
-│   ├── api/
-│   │   ├── rag/
-│   │   ├── auth.py
-│   │   ├── chat.py
-│   │   ├── cold_start.py
-│   │   ├── conversation.py
-│   │   └── reset.py
-│   ├── auth/
-│   ├── config/
-│   ├── db/
-│   ├── rag/
-│   │   ├── chunker/
-│   │   ├── embedding/
-│   │   ├── loader/
-│   │   ├── reranker/
-│   │   ├── retriever/
-│   │   └── vector_store/
-│   ├── schemas/
-│   ├── service/
-│   ├── ocr/
-│   └── code_start/
-├── frontend/
-├── .env
+│   ├── education_company/      # AI 教育公司运行时、通信图、团队注册、CLI
+│   ├── user_system/            # 独立用户系统微服务
+│   │   ├── modules/
+│   │   │   ├── auth/           # JWT 鉴权、注册、登录、refresh token
+│   │   │   ├── profile/        # 用户档案和班级视图
+│   │   │   ├── learning/       # 学习进度、班级、summary、上下文窗口
+│   │   │   ├── chat/           # 聊天历史和历史只读快照
+│   │   │   ├── exercise/       # 做题记录
+│   │   │   └── commerce/       # 订单和课程权益
+│   │   └── common/             # PostgreSQL、Redis、schema check、service state
+│   ├── mcp/                    # 独立 MCP 工具服务
+│   ├── agent/                  # 通用 agent 能力层、工具适配、技能资料
+│   ├── api/                    # 仍保留的 API 能力层，如 cold start / RAG
+│   ├── config/                 # 配置加载和领域配置对象
+│   └── schemas/                # 仍属于核心服务的共享 schema
+├── team/
+│   ├── cpa/
+│   │   ├── config.yaml
+│   │   └── prompts/
+│   ├── finance/
+│   ├── accounting/
+│   ├── western_economics/
+│   └── tax/
+├── sql/user_system/            # 用户系统分模块 SQL
+├── doc/                        # 架构、工具登记、迁移总结
+├── frontend/                   # AI Native 学习工作台
+├── docker-compose.user-system.polardb.yaml
+├── docker-compose.user-system.postgres.yaml
 ├── config.yaml
-├── main.py
-├── pyproject.toml
-└── start.bat
+├── config-example.yaml
+└── pyproject.toml
 ```
 
-***
+## 快速启动
 
-## 项目启动
-
-### 环境要求
-
-- Python 3.11+
-- Node.js 18+
-- Milvus 向量数据库
-
-### 后端启动
-
-**一键启动（Windows）：**
+### 1. 安装依赖
 
 ```bash
-start.bat
-```
-
-**手动启动：**
-
-```bash
-# 安装依赖
 uv sync
 
-# 启动服务
+cd frontend/
+
+npm install
+```
+
+### 2. 准备配置
+
+```bash
+cp config-example.yaml config.yaml
+
+cp .env-example .env
+```
+
+至少填写配置：
+
+- `llm.base_url`、`llm.model_name` 和模型 API Key 环境变量。
+- `education_company.enabled_team_ids`，例如启用 `cpa`、`finance`、`accounting`、`western_economics`、`tax`。
+- `user_system.host`、`user_system.port`、`user_system.postgres.dsn`、JWT secret/issuer/audience。
+- `tool.mcp.endpoint` 或 MCP 服务 host/port。
+
+### 3. 准备数据库
+
+你需要先安装数据库并建表：
+
+PostgreSQL 版本：
+
+```bash
+docker compose -f docker-compose.user-system.postgres.yaml up -d user-system-postgres user-system-redis
+```
+
+PolarDB 版本：
+
+```bash
+docker compose -f docker-compose.user-system.polardb.yaml up -d user-system-polardb user-system-redis
+```
+
+首次部署需要手动执行：
+
+```bash
+sql/user_system/001_auth.sql
+sql/user_system/002_learning.sql
+sql/user_system/003_chat.sql
+sql/user_system/004_exercise.sql
+sql/user_system/005_commerce.sql
+```
+
+### 4. 一键启动（同步启动所有微服务，适用于非分布式架构）
+
+```bash
+docker compose -f docker-compose.yaml up
+```
+
+也可以手动部署各个微服务（同样需要准备数据库）：
+
+### 1. 启动用户系统服务
+
+```bash
+docker compose -f docker/docker-compose.user-system.yaml up
+```
+
+### 2. 启动 MCP 工具服务
+
+```bash
+docker compose -f docker/docker-compose.mcp.yaml up
+```
+
+### 3. 启动 Agency Swarm 服务
+
+```bash
+docker compose -f docker/docker-compose.agent.yaml up
+```
+
+### 4. 启动 sandbox 服务
+
+```bash
+docker compose -f docker/docker-compose.sandbox.yaml up
+``` 
+
+### 6. 启动前后端服务
+
+```bash
+docker compose -f docker/docker-compose.yaml
+```
+
+### 7. 也可以使用CLI：
+
+```bash
 uv run -m main
 ```
 
-后端服务将在 <http://localhost:8000> 运行
+CLI 支持：
 
-### 前端启动
+- `:graph` 查看公司通信图。
+- `:calls` 查看 agent 间真实通信日志。
+- `:progress` 查看学习进度上下文快照。
+- `:trace` 查看上一轮内部过程。
+- `:reset` 重置访客 session。
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+## License
 
-前端将在 <http://localhost:5173> 运行
-
-### 配置说明
-
-复制 `.env.example` 为 `.env`，填写以下关键配置：
-
-- LLM API Key（DeepSeek 或其他兼容 OpenAI 接口的模型）
-- 向量数据库连接信息
-- 其他可选工具 API Key
+SamFin is released under the MIT License. See [LICENSE](LICENSE).
 
 ---
 
-### Docker 部署
-
-**环境要求**
-
-- Docker 20.10+
-- Docker Compose 2.0+
-- 至少 4GB 内存（推荐 8GB+）
-- 至少 20GB 磁盘空间
-
-**部署步骤**
-
-```bash
-# 1. 配置环境变量
-cp .env.example .env
-# 编辑 .env 文件，填入 API 密钥
-
-# 2. 构建并启动所有服务
-docker-compose up --build -d
-
-# 3. 查看日志
-docker-compose logs -f
-```
-
-**访问服务**
-
-- 前端界面：http://localhost
-- 后端 API：http://localhost:8000
-- API 文档：http://localhost:8000/docs
-
-**常用命令**
-
-```bash
-# 停止服务
-docker-compose down
-
-# 停止并删除数据卷（清空所有数据）
-docker-compose down -v
-
-# 重启服务
-docker-compose restart
-
-# 查看容器状态
-docker-compose ps
-```
-
----
-
-SamCollege - 让每一分钟的学习都有价值
+<p align="center"><strong>SamFin - 让每一个财经学习者背后都有一支 AI 教学公司</strong></p>
