@@ -170,7 +170,7 @@ flowchart TB
 ```text
 SamFin/
 ├── src/
-│   ├── education_company/      # AI 教育公司运行时、通信图、团队注册、CLI
+│   ├── education_company/      # Agency Swarm微服务
 │   ├── user_system/            # 独立用户系统微服务
 │   │   ├── modules/
 │   │   │   ├── auth/           # JWT 鉴权、注册、登录、refresh token
@@ -180,9 +180,10 @@ SamFin/
 │   │   │   ├── exercise/       # 做题记录
 │   │   │   └── commerce/       # 订单和课程权益
 │   │   └── common/             # PostgreSQL、Redis、schema check、service state
-│   ├── mcp/                    # 独立 MCP 工具服务
-│   ├── agent/                  # 通用 agent 能力层、工具适配、技能资料
-│   ├── api/                    # 仍保留的 API 能力层，如 cold start / RAG
+│   ├── mcp/                    # 独立 MCP 工具微服务
+│   ├── sandbox/                # 独立 Sandbox 工具微服务
+│   ├── agent/                  # Agent Harness
+│   ├── master/                 # 主后台微服务层
 │   ├── config/                 # 配置加载和领域配置对象
 │   └── schemas/                # 仍属于核心服务的共享 schema
 ├── team/
@@ -193,11 +194,12 @@ SamFin/
 │   ├── accounting/
 │   ├── western_economics/
 │   └── tax/
-├── sql/user_system/            # 用户系统分模块 SQL
-├── doc/                        # 架构、工具登记、迁移总结
-├── frontend/                   # AI Native 学习工作台
+├── sql/            # 数据库
+├── docker/            # docker部署
+├── frontend/                   
 ├── docker-compose.user-system.polardb.yaml
 ├── docker-compose.user-system.postgres.yaml
+├── docker-compose.yaml
 ├── config.yaml
 ├── config-example.yaml
 └── pyproject.toml
