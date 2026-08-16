@@ -13,6 +13,12 @@ test/
 
 docker_server/
 docker/
+!docker/
+docker/*
+!docker/Dockerfile.mcp
+!docker/docker-compose.mcp.yaml
+!docker/Dockerfile.sandbox-service
+!docker/Dockerfile.sandbox-runtime
 /scripts/
 
 # Virtual environments
