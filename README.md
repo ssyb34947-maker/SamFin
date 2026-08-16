@@ -1,6 +1,6 @@
 <h1 align="center">SamFin AI Education Company</h1>
 <p align="center">
-  <strong>面向财经教育的 AI Native 多对一教学公司</strong>
+  <strong>面向财经教育的 AI Native 平台</strong>
 </p>
 
 <p align="center">
@@ -15,16 +15,16 @@
 
 ## SamFin 是什么
 
-SamFin 是面向财经考研与财经证书培训的 AI Native 教育公司。平台围绕考试目标、学习周期、知识库、题库、学习记录和长期成长档案，为学生组织一支多对一的 AI 教学团队。
+SamFin 是面向财经教育的 AI Native 一站式平台。平台围绕考试目标、学习周期、知识库、题库、学习记录和长期成长档案，为学生组织一支多对一的 AI 教学团队。
 
 在 SamFin 中，教务总监负责接待和分流，教学团队以独立部门形式运营。每个团队配置班主任、主讲教授、教研总监、习题讲师和助教集群，通过公司通信图协同完成诊断、规划、授课、练习、复盘和续学。
 
 ## 产品架构
 
-### 公司级入口
+### 平台入口
 
 - 教务总监：平台前台，只负责收集考试目标和备考时间，并把学生移交给合适团队的班主任。
-- 团队注册中心：扫描 `team/<team_id>/config.yaml`，结合全局配置决定哪些教学团队对外营业。
+- 团队注册中心：注册专属课程课程
 - 公司通信图：入口总监连接各团队班主任，由班主任组织团队内部教学资源。
 - 会话权交接：完成分流后，同一 session 进入对应团队服务。
 
@@ -33,12 +33,10 @@ SamFin 是面向财经考研与财经证书培训的 AI Native 教育公司。�
 五大团队都采用同一套高级 VIP 多对一服务结构：
 
 - 班主任：团队第一责任人，接收教务总监移交，继续做学习诊断和服务组织。
-- 主讲教授：负责核心科目讲解、知识体系搭建、题目陷阱和答疑。
+- 主讲教授：负责核心知识点讲解、知识体系搭建、题目陷阱和答疑。
 - 教研总监：负责阶段规划、测评策略、模考复盘和验收指标。
-- 习题讲师：负责题型拆解、例题讲练、错题归因和专项训练。
-- 助教集群：负责答疑、资料整理、学习提醒、题库维护和进度跟踪。
-
-团队扩展标准已经固化：一个团队目录、一份团队配置、多份独立 prompt、一套知识库和题库工具、一套用户学习数据接入策略。
+- 习题讲师：负责专属习题命题、题型拆解、例题讲练、错题归因和专项训练。
+- 助教集群：负责并行执行教授派遣的工作，包括资料搜索、教学可视化交互工具制作、题库维护和进度跟踪。
 
 ## 五大王牌教学团队
 
@@ -170,26 +168,19 @@ flowchart TB
 ```text
 SamFin/
 ├── src/
-│   ├── education_company/      # Agency Swarm微服务
-│   ├── user_system/            # 独立用户系统微服务
-│   │   ├── modules/
-│   │   │   ├── auth/           # JWT 鉴权、注册、登录、refresh token
-│   │   │   ├── profile/        # 用户档案和班级视图
-│   │   │   ├── learning/       # 学习进度、班级、summary、上下文窗口
-│   │   │   ├── chat/           # 聊天历史和历史只读快照
-│   │   │   ├── exercise/       # 做题记录
-│   │   │   └── commerce/       # 订单和课程权益
-│   │   └── common/             # PostgreSQL、Redis、schema check、service state
+│   ├── swarm/                  # Agency Swarm微服务
+│   ├── user_system/            # 用户系统微服务
 │   ├── mcp/                    # 独立 MCP 工具微服务
 │   ├── sandbox/                # 独立 Sandbox 工具微服务
-│   ├── agent/                  # Agent Harness
+│   ├── harness/                # Agent Harness 库，不是独立微服务
 │   ├── master/                 # 主后台微服务层
 │   ├── config/                 # 配置加载和领域配置对象
 │   └── schemas/                # 仍属于核心服务的共享 schema
 ├── team/
 │   ├── cpa/
 │   │   ├── config.yaml
-│   │   └── prompts/
+│   │   ├── capabilities/
+│   │   └── roles/
 │   ├── finance/
 │   ├── accounting/
 │   ├── western_economics/
@@ -197,11 +188,8 @@ SamFin/
 ├── sql/            # 数据库
 ├── docker/            # docker部署
 ├── frontend/                   
-├── docker-compose.user-system.polardb.yaml
-├── docker-compose.user-system.postgres.yaml
 ├── docker-compose.yaml
-├── config.yaml
-├── config-example.yaml
+├── config/                     # 各微服务独立配置
 └── pyproject.toml
 ```
 
@@ -220,15 +208,13 @@ npm install
 ### 2. 准备配置
 
 ```bash
-cp config-example.yaml config.yaml
-
-cp .env-example .env
+bash config.sh
 ```
 
 至少填写配置：
 
 - `llm.base_url`、`llm.model_name` 和模型 API Key 环境变量。
-- `education_company.enabled_team_ids`，例如启用 `cpa`、`finance`、`accounting`、`western_economics`、`tax`。
+- `swarm.enabled_team_ids`，例如启用 `cpa`、`finance`、`accounting`、`western_economics`、`tax`。
 - `user_system.host`、`user_system.port`、`user_system.postgres.dsn`、JWT secret/issuer/audience。
 - `tool.mcp.endpoint` 或 MCP 服务 host/port。
 
@@ -299,7 +285,7 @@ docker compose -f docker/docker-compose.yaml
 ### 7. 也可以使用CLI：
 
 ```bash
-uv run -m main
+uv run python -m src.cli
 ```
 
 CLI 支持：
@@ -309,6 +295,8 @@ CLI 支持：
 - `:progress` 查看学习进度上下文快照。
 - `:trace` 查看上一轮内部过程。
 - `:reset` 重置访客 session。
+
+Python CLI 只是 swarm 微服务客户端；如果 swarm 服务未启动，会直接提示服务没有启动，不会在 CLI 进程内创建 swarm runtime。
 
 ## License
 
