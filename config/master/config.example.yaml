@@ -1,0 +1,107 @@
+# LLM 配置
+llm:
+  # api_key: 从 OPENAI_API_KEY 环境变量获取
+  base_url: https://api.deepseek.com
+  model_name: deepseek-reasoner
+  temperature: 0.7
+  max_tokens: 2000
+
+# Agent 配置
+harness:
+  memory_type: buffer
+  max_history: 10
+  max_agent_turns: 6
+
+# RAG 配置
+rag:
+  collection_name: rag_collection
+  vector_dim: 1024
+  chunk_size: 1024
+  chunk_overlap: 0.1
+  milvus:
+    host: "localhost"
+    # host: 从 MILVUS_HOST 环境变量获取（可选）
+    port: 19530
+
+# Embedding 配置
+embedding:
+  model_name: BAAI/bge-large-zh-v1.5
+  # api_key: 从 EMBEDDING_API_KEY 环境变量获取
+  base_url: https://api.siliconflow.cn/v1/embeddings
+
+# Rerank 配置
+rerank:
+  model_name: qwen-rerank
+  # api_key: 从 REANK_API_KEY 环境变量获取
+  base_url: https://api.deepseek.com
+
+# OCR 配置
+ocr:
+  model_name: PaddleOCR-VL-1.5
+  # api_key: 从 PADDLEOCR_API_KEY 环境变量获取
+  base_url: https://paddleocr.aistudio-app.com/api/v2/ocr/jobs
+
+
+# 用户系统配置
+user_system:
+  enabled: true
+  mode: remote  # local | remote
+  base_url: "http://localhost:8002"
+  host: "127.0.0.1"
+  port: 8002
+  request_timeout: 10.0
+  repository: postgres
+  jwt:
+    secret: ""
+    issuer: ""
+    audience: ""
+    access_minutes: 30
+    refresh_days: 7
+  postgres:
+    dsn: "postgresql://samfin:password@localhost:5432/samfin"
+    min_connections: 1
+    max_connections: 10
+    connect_timeout: 5.0
+  redis:
+    enabled: false
+    url: "redis://localhost:6379/0"
+    ttl_seconds: 3600
+    socket_timeout: 2.0
+    socket_connect_timeout: 2.0
+    health_check_interval: 30
+    max_connections: 20
+    key_prefix: "samfin"
+
+# AI 教育公司应用层配置
+swarm:
+  enabled: true
+  runtime: agents
+  model_provider: existing_llm_config
+  trace_enabled: true
+  teams_dir: team
+  enabled_team_ids:
+    - cpa
+    - finance
+    - accounting
+    - western_economics
+    - tax
+
+# 工具配置
+tool:
+  mcp:
+    mode: remote  # local | remote
+    endpoint: "http://localhost:8001/sse"
+    timeout: 30.0
+    auto_setup_local: true
+    host: "127.0.0.1"
+    port: 8001
+    transport: sse
+    health_path: /health
+  websearch:
+    enabled: True
+    api_url: "https://api.tavily.com"
+    api_key: "your_tavily_api_key"
+
+  sandbox:
+    endpoint: "http://localhost:8003"
+    timeout: 30.0

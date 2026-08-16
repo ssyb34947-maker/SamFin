@@ -1,0 +1,91 @@
+# MCP microservice configuration.
+# This file is intentionally separate from the agent and user-system configs.
+
+llm:
+  api_key: "mcp-service-local-key"
+  base_url: ""
+  model_name: "mcp-service"
+  temperature: 0.7
+  max_tokens: 2000
+
+harness:
+  memory_type: buffer
+  max_history: 10
+  max_agent_turns: 6
+
+rag:
+  collection_name: rag_collection
+  vector_dim: 1024
+  chunk_size: 1024
+  chunk_overlap: 0.1
+  milvus:
+    host: "milvus"
+    port: 19530
+
+embedding:
+  model_name: BAAI/bge-large-zh-v1.5
+  api_key: ""
+  base_url: ""
+
+rerank:
+  model_name: qwen-rerank
+  api_key: ""
+  base_url: ""
+
+ocr:
+  model_name: PaddleOCR-VL-1.5
+  api_key: ""
+  base_url: ""
+
+user_system:
+  enabled: true
+  mode: remote
+  base_url: "http://user:8002"
+  request_timeout: 10.0
+  repository: postgres
+  jwt:
+    secret: ""
+    issuer: ""
+    audience: ""
+    access_minutes: 30
+    refresh_days: 7
+  postgres:
+    dsn: ""
+    min_connections: 1
+    max_connections: 10
+    connect_timeout: 5.0
+  redis:
+    enabled: false
+    url: ""
+    ttl_seconds: 3600
+    socket_timeout: 2.0
+    socket_connect_timeout: 2.0
+    health_check_interval: 30
+    max_connections: 20
+    key_prefix: ""
+
+swarm:
+  enabled: false
+  runtime: agents
+  model_provider: existing_llm_config
+  trace_enabled: false
+  teams_dir: team
+  enabled_team_ids: []
+
+tool:
+  mcp:
+    mode: remote
+    endpoint: "http://mcp:8001/sse"
+    timeout: 30.0
+    auto_setup_local: false
+    host: "0.0.0.0"
+    port: 8001
+    transport: sse
+    health_path: /health
+  websearch:
+    enabled: false
+    api_url: ""
+    api_key: ""
+  sandbox:
+    endpoint: "http://sandbox:8003"
+    timeout: 30.0

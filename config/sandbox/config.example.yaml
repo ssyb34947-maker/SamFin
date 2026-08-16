@@ -1,0 +1,44 @@
+sandbox:
+  server:
+    host: "0.0.0.0"
+    port: 8003
+  workspace_root: "/tmp/samlang-sandbox/workspaces"
+  artifact_root: "/tmp/samlang-sandbox/artifacts"
+  docker:
+    runtime_image: "samlang-sandbox-runtime:latest"
+    network_disabled: true
+    memory_limit: "512m"
+    nano_cpus: 1000000000
+    pids_limit: 128
+    read_only_root: true
+    user: "1000:1000"
+  limits:
+    timeout_seconds: 10
+    max_code_bytes: 200000
+    max_output_bytes: 200000
+    max_file_bytes: 5000000
+    max_artifact_bytes: 10000000
+    max_artifacts: 20
+    sql_default_limit: 500
+    sql_max_limit: 1000
+  pool:
+    size: 2
+    acquire_timeout_seconds: 10
+  security:
+    python_allowed_imports:
+      - csv
+      - datetime
+      - decimal
+      - duckdb
+      - fractions
+      - json
+      - math
+      - matplotlib
+      - numpy
+      - openpyxl
+      - pandas
+      - pyarrow
+      - re
+      - scipy
+      - statistics
+    javascript_allowed_imports: []
