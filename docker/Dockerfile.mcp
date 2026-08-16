@@ -1,0 +1,28 @@
+# MCP tool service Dockerfile
+FROM python:3.12-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY pyproject.toml uv.lock* ./
+RUN pip install --no-cache-dir uv && uv sync --frozen
+
+COPY . .
+
+ENV CONFIG_PATH=/app/config/mcp/config.yaml \
+    MCP_SERVICE_HOST=0.0.0.0 \
+    MCP_SERVICE_PORT=8001 \
+    MCP_SERVICE_TRANSPORT=sse \
+    MCP_SERVICE_PATH=/sse \
+    MCP_SERVICE_HEALTH_PATH=/health
+
+EXPOSE 8001
+
+HEALTHCHECK --interval=10s --timeout=5s --retries=12 CMD curl -fsS http://127.0.0.1:8001/health || exit 1
+
+CMD ["uv", "run", "python", "-m", "src.mcp.main"]
