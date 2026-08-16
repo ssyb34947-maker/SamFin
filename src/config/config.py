@@ -15,20 +15,19 @@ if env_path.exists():
     load_dotenv(dotenv_path=env_path)
 
 from .llm import LLMConfig
-from .agent import AgentConfig
+from .harness import HarnessConfig
 from .tool import (
     ToolConfig, 
     WebSearchConfig, 
-    YoudaoDictionaryConfig,
-    PPIOConfig,
-    RemotionConfig,
-    VideoStorageConfig,
+    MCPServiceConfig,
+    SandboxToolConfig,
 )
-from .skill import SkillUploadConfig, SkillConfig
 from .rag import RAGConfig, MilvusConfig
 from .embedding import EmbeddingConfig
 from .rerank import RerankConfig
 from .ocr import OCRConfig
+from .swarm import SwarmConfig
+from .user_system import JWTConfig, PostgreSQLConfig, RedisConfig, UserSystemConfig
 
 
 @dataclass
@@ -41,16 +40,17 @@ class Config:
     输出：配置实例
     """
     llm: LLMConfig
-    agent: AgentConfig
+    harness: HarnessConfig
     tool: ToolConfig
-    skill: SkillUploadConfig
     rag: RAGConfig
     embedding: EmbeddingConfig
     rerank: RerankConfig
     ocr: OCRConfig
+    swarm: SwarmConfig
+    user_system: UserSystemConfig
 
     @classmethod
-    def from_yaml(cls, config_path: str = "config.yaml") -> "Config":
+    def from_yaml(cls, config_path: str = "") -> "Config":
         """
         从 YAML 文件加载配置
 
@@ -67,64 +67,36 @@ class Config:
         # LLM 配置
         llm_config = LLMConfig(**data["llm"])
 
-        # Agent 配置
-        agent_config = AgentConfig(**data["agent"])
+        # Harness 配置
+        harness_data = data.get("harness", data.get("agent", {}))
+        harness_config = HarnessConfig(**harness_data)
 
         # 工具配置
         websearch_config = WebSearchConfig(**data["tool"]["websearch"])
-        youdao_dictionary_config = YoudaoDictionaryConfig(**data["tool"]["youdao_dictionary"])
         
-        # PPIO 沙箱配置
-        ppio_data = data.get("tool", {}).get("ppio_sandbox", {})
-        
-        # Remotion 配置
-        remotion_data = ppio_data.get("remotion", {})
-        remotion_config = RemotionConfig(
-            enabled=remotion_data.get("enabled", True),
-            timeout=remotion_data.get("timeout", 600),
-            default_template=remotion_data.get("default_template", "with-media"),
-            available_templates=remotion_data.get("available_templates", ["hello-world", "with-media", "with-voiceover"]),
-            runtimes=remotion_data.get("runtimes", {"default": "nodejs20", "available": ["nodejs18", "nodejs20"]}),
-            quality_presets=remotion_data.get("quality_presets", ["720p", "1080p", "1440p", "4k"]),
-            output_formats=remotion_data.get("output_formats", ["mp4", "webm", "prores"]),
+        sandbox_data = data.get("tool", {}).get("sandbox", {})
+        sandbox_config = SandboxToolConfig(
+            endpoint=os.getenv("SANDBOX_SERVICE_URL", sandbox_data.get("endpoint", "")),
+            timeout=sandbox_data.get("timeout", 30.0),
         )
         
-        # 视频存储配置
-        storage_data = ppio_data.get("video_storage", {})
-        video_storage_config = VideoStorageConfig(
-            type=storage_data.get("type", "local"),
-            local_path=storage_data.get("local_path", "./temp/videos"),
-            local_url=storage_data.get("local_url", "/videos"),
-            oss_bucket=storage_data.get("oss_bucket", ""),
-            oss_endpoint=storage_data.get("oss_endpoint", ""),
-            oss_access_key_id=os.getenv("OSS_ACCESS_KEY_ID", ""),
-            oss_access_key_secret=os.getenv("OSS_ACCESS_KEY_SECRET", ""),
-        )
-        
-        # PPIO 主配置
-        ppio_config = PPIOConfig(
-            enabled=ppio_data.get("enabled", False),
-            api_key=os.getenv("PPIO_API_KEY", ppio_data.get("api_key", "")),
-            base_url=ppio_data.get("base_url", "https://api.ppio.cloud"),
-            default_timeout=ppio_data.get("default_timeout", 60),
-            remotion=remotion_config,
-            video_storage=video_storage_config,
-        )
-        
-        tool_config = ToolConfig(
-            websearch=websearch_config,
-            youdao_dictionary=youdao_dictionary_config,
-            ppio_sandbox=ppio_config,
+        mcp_data = data.get("tool", {}).get("mcp", {})
+        mcp_config = MCPServiceConfig(
+            mode=mcp_data.get("mode", "local"),
+            endpoint=os.getenv("MCP_SERVICE_URL", mcp_data.get("endpoint", "")),
+            timeout=mcp_data.get("timeout", 30.0),
+            auto_setup_local=mcp_data.get("auto_setup_local", True),
+            host=mcp_data.get("host", ""),
+            port=mcp_data.get("port", 0),
+            transport=mcp_data.get("transport", "sse"),
+            health_path=mcp_data.get("health_path", "/health"),
         )
 
-        # 技能配置
-        skill_data = data["skill"].copy()
-        if "skill_files" in skill_data:
-            skill_files = []
-            for skill in skill_data["skill_files"]:
-                skill_files.append(SkillConfig(**skill))
-            skill_data["skill_files"] = skill_files
-        skill_config = SkillUploadConfig(**skill_data)
+        tool_config = ToolConfig(
+            websearch=websearch_config,
+            sandbox=sandbox_config,
+            mcp=mcp_config,
+        )
 
         # RAG 配置
         rag_data = data.get("rag", {})
@@ -151,22 +123,51 @@ class Config:
         ocr_data = data.get("ocr", {})
         ocr_config = OCRConfig(**ocr_data)
 
+        # User system 配置
+        user_system_data = data.get("user_system", {})
+        redis_data = user_system_data.get("redis", {})
+        postgres_data = user_system_data.get("postgres", {})
+        jwt_data = user_system_data.get("jwt", {})
+        user_system_config = UserSystemConfig(
+            enabled=user_system_data.get("enabled", True),
+            mode=user_system_data.get("mode", "remote"),
+            base_url=os.getenv("USER_SYSTEM_BASE_URL", user_system_data.get("base_url", "")),
+            host=user_system_data.get("host", ""),
+            port=user_system_data.get("port", 0),
+            request_timeout=user_system_data.get("request_timeout", 10.0),
+            repository=user_system_data.get("repository", "postgres"),
+            jwt=JWTConfig(**jwt_data),
+            postgres=PostgreSQLConfig(**postgres_data),
+            redis=RedisConfig(**redis_data),
+        )
+
+        # Education company 配置（应用层，多 Agent 教学团队）
+        swarm_data = data.get("swarm", {})
+        swarm_config = SwarmConfig(**swarm_data)
+
         return cls(
             llm=llm_config,
-            agent=agent_config,
+            harness=harness_config,
             tool=tool_config,
-            skill=skill_config,
             rag=rag_config,
             embedding=embedding_config,
             rerank=rerank_config,
-            ocr=ocr_config
+            ocr=ocr_config,
+            swarm=swarm_config,
+            user_system=user_system_config
         )
 
 
 _config_instance = None
 
 
-def get_config(config_path: str = "config.yaml") -> Config:
+def _resolve_config_path(config_path: str) -> str:
+    if not config_path or config_path == "config.yaml":
+        return os.getenv("CONFIG_PATH", "config/master/config.yaml")
+    return config_path
+
+
+def get_config(config_path: str = "") -> Config:
     """
     获取全局配置实例（单例模式）
 
@@ -175,11 +176,11 @@ def get_config(config_path: str = "config.yaml") -> Config:
     """
     global _config_instance
     if _config_instance is None:
-        _config_instance = Config.from_yaml(config_path)
+        _config_instance = Config.from_yaml(_resolve_config_path(config_path))
     return _config_instance
 
 
-def reload_config(config_path: str = "config.yaml") -> Config:
+def reload_config(config_path: str = "") -> Config:
     """
     重新加载配置
 
@@ -187,5 +188,5 @@ def reload_config(config_path: str = "config.yaml") -> Config:
     输出：Config 实例
     """
     global _config_instance
-    _config_instance = Config.from_yaml(config_path)
+    _config_instance = Config.from_yaml(_resolve_config_path(config_path))
     return _config_instance
